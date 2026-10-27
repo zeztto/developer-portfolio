@@ -26,10 +26,19 @@ Markdown·JSON 문서 저장소이므로 Node.js의 built-in API로 검사합니
 
 ```sh
 node scripts/catalog.mjs --check
+node scripts/public-code.mjs --check
 node scripts/check-docs.mjs
 ```
 
 이 검사는 상대 링크, 데이터 스키마, 색인과 스냅샷의 일치, 버전과 기본 공개 안전성을 확인합니다.
+
+공개 코드 목록의 metadata만 바꾼 뒤에는 `node scripts/public-code.mjs --generate`로 문서를 다시 만듭니다. 저장된 자료를 사용하므로 네트워크에 연결하지 않습니다.
+
+GitHub의 현재 공개 여부·default branch head·동일 head의 성공 CI와 권리 고지 파일을 확인할 때는 아래 명령을 수동 실행합니다. `gh` CLI의 읽기 권한을 사용하며 metadata나 원격 저장소를 변경하지 않습니다.
+
+```sh
+node scripts/public-code.mjs --verify-public
+```
 
 저장된 스냅샷에서 색인만 다시 만들 때는 다음 명령을 사용합니다. 네트워크를 사용하지 않습니다.
 

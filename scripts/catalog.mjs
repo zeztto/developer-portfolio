@@ -45,9 +45,11 @@ export function render(snapshot) {
   const projects = snapshot.projects;
   const categories = [...new Set(projects.map((p) => p.category))];
   const technologies = [...new Set(projects.flatMap((p) => p.techStack))].sort();
-  const header = `[소개](../README.md) · [사용한 기술](stack.md) · [자료와 공개 범위](evidence.md)\n\n`;
+  const header = '[소개](../README.md) · [공개 코드](public-code.md) · '
+    + '[사용한 기술](stack.md) · [자료와 공개 범위](evidence.md)\n\n';
   const note = `기준일: **${date} KST**. [공개 목록](${source})의 스냅샷입니다. `
-    + '프로젝트 설명과 기술명은 수집 당시의 공개 소개를 따릅니다.\n\n';
+    + '프로젝트 설명과 기술명은 수집 당시의 공개 소개를 따릅니다. '
+    + '소개 항목 수와 [공개 코드 저장소](public-code.md)의 수는 별도로 집계합니다.\n\n';
   let catalog = '# 프로젝트 아카이브\n\n' + header + note
     + `**${projects.length}개 항목 · ${categories.length}개 분류.** `
     + '서비스, 도구, UI 작업을 함께 모았습니다. 같은 서비스의 별도 작업도 포함됩니다.\n\n'
