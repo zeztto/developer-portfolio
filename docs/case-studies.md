@@ -2,7 +2,7 @@
 
 [README](../README.md) · [사용한 기술](stack.md) · [자료와 공개 범위](evidence.md)
 
-## LMML: 공연 정보를 찾고 수정하는 일
+## LMML: 공연 정보 모델링
 
 [공개 소개](https://p1zza.kr/portfolio/lmml) · [서비스](https://lmml.kr)
 
@@ -12,7 +12,7 @@ LMML은 한국 메탈·하드코어·록 공연의 일정과 라인업, 공연�
 
 라인업 편집에서는 사람이 수정한 표시명과 밴드의 동일성을 함께 다뤄야 합니다. 언어별 목록의 추가·삭제·순서 변경을 살피고, 저장 뒤 편집 화면에 다시 들어갔을 때와 공개 화면에 표시되는 값을 확인합니다. 소셜 공지에서 추출한 정보에도 원본 확인과 수동 수정 경로를 둡니다.
 
-## circlr: 곡 전체에서 세부 편집으로
+## circlr: 곡 구조와 편집
 
 [공개 소개](https://p1zza.kr/portfolio/circlr)
 
@@ -22,7 +22,7 @@ SwiftUI·AppKit으로 화면을 만들고, 핵심 모델과 오디오 처리는 
 
 모델과 파일 읽기·쓰기 테스트에 더해 native 화면과 오디오 장치를 살핍니다. 장치·외부 플러그인 host별 호환성과 실시간 성능은 각각 실행해 확인해야 하는 범위입니다.
 
-## MixManifest: 저장된 Logic Pro 프로젝트를 기록으로
+## MixManifest: 파일 분석
 
 [공개 소개](https://p1zza.kr/portfolio/mixmanifest)
 
@@ -32,7 +32,7 @@ read-only parser의 출발점은 Mike Farr의 Apache-2.0 프로젝트인 [logicx
 
 입력에서 읽은 구조와 메타데이터를 출력 결과와 비교합니다. 지원 범위는 parser가 해석하는 필드이며, Logic Pro의 전체 내부 포맷을 독자적으로 규명한 도구는 아닙니다.
 
-## Drum Editor: 여러 마이크에 같은 편집 적용하기
+## Drum Editor: 공통 편집
 
 [공개 소개](https://p1zza.kr/portfolio/drum-editor)
 
