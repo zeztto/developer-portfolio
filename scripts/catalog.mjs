@@ -71,7 +71,8 @@ export function render(snapshot) {
     index += `## ${cell(tech)}\n\n`
       + projects.filter((p) => p.techStack.includes(tech)).map(link).join(' · ') + '\n\n';
   }
-  return { 'docs/project-index.md': catalog, 'docs/technology-index.md': index };
+  return { 'docs/project-index.md': catalog.trimEnd() + '\n',
+    'docs/technology-index.md': index.trimEnd() + '\n' };
 }
 
 export async function readSnapshot() {
@@ -80,7 +81,7 @@ export async function readSnapshot() {
 
 async function main() {
   const mode = process.argv[2];
-  assert.ok(['--refresh', '--check'].includes(mode), 'Use --refresh or --check');
+  assert.ok(['--refresh', '--generate', '--check'].includes(mode), 'Use --refresh, --generate or --check');
   let snapshot;
   if (mode === '--refresh') {
     const response = await fetch(source, { signal: AbortSignal.timeout(30000), redirect: 'error' });

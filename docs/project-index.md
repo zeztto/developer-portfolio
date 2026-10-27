@@ -185,4 +185,3 @@
 | 프로젝트 | 공개 소개 | 기재 기술 |
 | --- | --- | --- |
 | [큐알잉](https://p1zza.kr/portfolio/qr-ing) | 빠르고 간편한 무료 한국어 QR코드 생성기입니다. | Next.js, TypeScript, Tailwind CSS, qrcode, shadcn/ui, Noto Sans KR |
-
