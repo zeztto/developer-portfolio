@@ -45,13 +45,13 @@ export function render(snapshot) {
   const projects = snapshot.projects;
   const categories = [...new Set(projects.map((p) => p.category))];
   const technologies = [...new Set(projects.flatMap((p) => p.techStack))].sort();
-  const header = `[README](../README.md) · [기술 스택](stack.md) · [근거 기준](evidence.md)\n\n`;
+  const header = `[소개](../README.md) · [사용한 기술](stack.md) · [자료와 공개 범위](evidence.md)\n\n`;
   const note = `기준일: **${date} KST**. [공개 목록](${source})의 스냅샷입니다. `
-    + '공개 소개에 기재된 내용이며, 모든 구현·현재 운영 상태의 독립 검증이나 동일 숙련도를 뜻하지 않습니다.\n\n';
-  let catalog = '# 전체 공개 프로젝트\n\n' + header + note
-    + `**${projects.length}개 공개 항목 · ${categories.length}개 분류.** `
-    + '항목 수는 고객·납품·독립 원작의 수가 아닙니다. 같은 서비스의 별도 작업이나 UI 프로젝트도 포함됩니다.\n\n'
-    + '[모든 기술별 프로젝트 찾기](technology-index.md)\n\n';
+    + '프로젝트 설명과 기술명은 수집 당시의 공개 소개를 따릅니다.\n\n';
+  let catalog = '# 프로젝트 아카이브\n\n' + header + note
+    + `**${projects.length}개 항목 · ${categories.length}개 분류.** `
+    + '서비스, 도구, UI 작업을 함께 모았습니다. 같은 서비스의 별도 작업도 포함됩니다.\n\n'
+    + '[기술별로 찾아보기](technology-index.md)\n\n';
   const names = { Services: '서비스', Productivity: '생산성', Websites: '웹사이트',
     Games: '게임', Tools: '도구', AI: 'AI', Music: '음악', Finance: '금융', Education: '교육' };
   for (const category of categories) {
@@ -62,11 +62,11 @@ export function render(snapshot) {
     }
     catalog += '\n';
   }
-  let index = '# 기술 역색인\n\n' + header + note
-    + `공개 목록의 **서로 다른 기술 표기 ${technologies.length}개**를 빠짐없이 연결했습니다. `
-    + '프레임워크·API·라이브러리·형식·알고리즘을 포함한 표기 수이며, 독립적인 전문 역량의 개수가 아닙니다. '
-    + '유사 표기와 제품명은 원자료대로 보존했습니다.\n\n'
-    + '[전체 프로젝트 보기](project-index.md)\n\n';
+  let index = '# 기술별 프로젝트\n\n' + header + note
+    + `공개 소개의 **${technologies.length}개 기술 표기**로 프로젝트를 찾아볼 수 있습니다. `
+    + '언어·프레임워크·라이브러리·파일 형식 등이 섞여 있으며, 유사한 이름도 원자료대로 남겼습니다. '
+    + '대표 작업의 사용 맥락은 [사용한 기술](stack.md)에 정리했습니다.\n\n'
+    + '[프로젝트 아카이브 보기](project-index.md)\n\n';
   for (const tech of technologies) {
     index += `## ${cell(tech)}\n\n`
       + projects.filter((p) => p.techStack.includes(tech)).map(link).join(' · ') + '\n\n';

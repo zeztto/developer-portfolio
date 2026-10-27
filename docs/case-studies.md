@@ -1,77 +1,55 @@
 # 대표 사례
 
-[README](../README.md) · [기술 스택](stack.md) · [근거 기준](evidence.md)
+[README](../README.md) · [사용한 기술](stack.md) · [자료와 공개 범위](evidence.md)
 
-문제와 구현 선택이 드러나는 사례를 골랐습니다. 공개 소개와 선별 코드 확인에 근거한 설명이며, 이번 문서 작성이 제품 전체의 새 인수 테스트는 아닙니다.
-
-## 1. LMML: 공연 정보의 표현과 편집
+## LMML: 공연 정보를 찾고 수정하는 일
 
 [공개 소개](https://p1zza.kr/portfolio/lmml) · [서비스](https://lmml.kr)
 
-**문제:** 공연은 한 날짜·한 장소·단일 가격만으로 표현되지 않습니다. 여러 날짜와 장소, 언어별 밴드명, 조건부 요금, 별도 예매 상품을 구분해야 합니다.
+LMML은 한국 메탈·하드코어·록 공연의 일정과 라인업, 공연장과 예매 정보를 모아 보여주는 서비스입니다. Next.js·React·TypeScript로 공개·관리자 화면을, Drizzle·SQLite로 데이터 계층을 구현했습니다. 한국어·영어 콘텐츠, DeepSeek 기반 정보 추출, R2 포스터 저장과 SEO 표현을 연결합니다.
 
-**설계 선택:** 날짜별 회차와 장소별 정보를 구분하고, 묶음 페이지와 개별 회차의 책임을 나눕니다. 사람이 수정한 표시명과 밴드의 동일성을 같은 값으로 취급하지 않습니다. 소셜 공지에서 추출한 정보도 원본 확인과 수동 수정 경로를 거칩니다.
+공연 정보를 다룰 때는 날짜·장소·가격이 항상 하나씩 대응하지 않습니다. 여러 날짜의 회차와 장소, 묶음 페이지와 개별 회차, 조건부 요금과 별도 예매 상품을 어떻게 나눌지가 설계에서 다루는 문제입니다.
 
-**구현 범위:** Next.js·React·TypeScript 화면, Drizzle·SQLite 데이터 계층, 한국어·영어 콘텐츠, DeepSeek 기반 정보 추출, R2 포스터 저장, 공연 정보와 SEO 표현을 연결합니다.
+라인업 편집에서는 사람이 수정한 표시명과 밴드의 동일성을 함께 다뤄야 합니다. 언어별 목록의 추가·삭제·순서 변경을 살피고, 저장 뒤 편집 화면에 다시 들어갔을 때와 공개 화면에 표시되는 값을 확인합니다. 소셜 공지에서 추출한 정보에도 원본 확인과 수동 수정 경로를 둡니다.
 
-**확인 방식:** 저장 응답만 보는 대신 수정 화면 재진입·영속 데이터 재조회·공개 화면을 각각 확인합니다. 다국어 배열의 추가·삭제·순서 변경처럼 동일성에 영향을 주는 수정은 회귀 시나리오로 나눕니다.
-
-**경계:** 확인되지 않은 공연 정보는 추정하지 않습니다. 로컬 수정·PR 통과·운영 배포는 별개입니다. Google 색인 요청 접수도 최종 색인 완료와 다릅니다. 이 문서가 특정 최신 수정의 운영 배포를 보증하지는 않습니다.
-
-## 2. circlr: 전체 곡 구조와 세부 편집의 연결
+## circlr: 곡 전체에서 세부 편집으로
 
 [공개 소개](https://p1zza.kr/portfolio/circlr)
 
-**문제:** 곡의 큰 구조를 살펴보는 작업과 개별 MIDI·오디오 구간을 편집하는 작업을 이어야 합니다.
+circlr는 곡의 구조를 원형 타임라인으로 보여주는 macOS 음악 작업 앱입니다. 앨범·곡·섹션의 큰 흐름을 살펴보는 일과 개별 MIDI·오디오 구간을 편집하는 일을 한 앱에서 다룹니다.
 
-**설계 선택:** 앨범·곡·섹션을 원형 타임라인으로 표현하고, native 화면과 핵심 모델·오디오 처리를 분리합니다. 프로젝트 저장과 내보내기를 편집 흐름에 연결합니다.
+SwiftUI·AppKit으로 화면을 만들고, 핵심 모델과 오디오 처리는 Swift Package Manager의 core·audio·app target으로 나누었습니다. 화면의 편집 상태와 파일·오디오 처리를 따로 다루면서 프로젝트 저장과 내보내기를 편집 흐름에 연결합니다. 오디오·MIDI 처리에는 AVFAudio·AudioToolbox·CoreMIDI를, 로컬 도구 연결에는 Python MCP를 사용합니다.
 
-**구현 범위:** Swift Package Manager의 core·audio·app target, SwiftUI·AppKit 화면, AVFAudio·AudioToolbox·CoreMIDI 기반 처리, Python MCP 연결을 확인했습니다.
+모델과 파일 읽기·쓰기 테스트에 더해 native 화면과 오디오 장치를 살핍니다. 장치·외부 플러그인 host별 호환성과 실시간 성능은 각각 실행해 확인해야 하는 범위입니다.
 
-**확인 방식:** 모델 테스트와 파일 읽기·쓰기, 실제 native 앱 화면·오디오 장치 확인을 서로 다른 검증으로 취급합니다.
+## MixManifest: 저장된 Logic Pro 프로젝트를 기록으로
 
-**경계:** 앱에 오디오 코드가 있다는 사실만으로 모든 장치의 녹음·호스트·외부 플러그인 호환성을 보증하지 않습니다. 상용 DAW를 대체하는 완성도나 실시간 성능 수치를 주장하지 않습니다.
+[공개 소개](https://p1zza.kr/portfolio/mixmanifest)
 
-## 3. MixManifest·AAF Trans: 원본을 보존하는 파일 도구
+MixManifest는 저장된 `.logicx` 패키지에서 트랙과 채널 정보를 읽고 JSON·텍스트로 내보내는 macOS 앱입니다. 프로젝트를 수정하지 않고 읽어낸 정보와 그 출처를 남깁니다. Swift·Foundation·CryptoKit을 사용하며, 해석할 수 없는 필드는 지원 범위 밖으로 표시합니다.
 
-[MixManifest](https://p1zza.kr/portfolio/mixmanifest) · [AAF Trans](https://p1zza.kr/portfolio/aaf-trans)
+read-only parser의 출발점은 Mike Farr의 Apache-2.0 프로젝트인 [logicxkit](https://github.com/phierceweb/logicxkit/tree/75b58fbf597a2ea1296b68323c09c7e3bed84ff6)입니다. 포맷 정보와 일부 parsing logic을 참고·이식한 Swift adaptation이며, 여기에 native Swift 범위 검사·진단·manifest 내보내기·macOS UI를 더했습니다.
 
-**문제:** 프로젝트나 교환 파일을 읽고 정리하더라도, 원본을 잃거나 불확실한 해석을 확정 정보로 제시해서는 안 됩니다.
+입력에서 읽은 구조와 메타데이터를 출력 결과와 비교합니다. 지원 범위는 parser가 해석하는 필드이며, Logic Pro의 전체 내부 포맷을 독자적으로 규명한 도구는 아닙니다.
 
-**설계 선택:** 읽어낸 정보의 출처를 남기고, 변환은 복제본에 적용한 뒤 구조와 오디오 지문을 확인합니다. 해석하지 못한 필드는 지원 범위 밖으로 명시합니다.
+## Drum Editor: 여러 마이크에 같은 편집 적용하기
 
-**구현 범위:** MixManifest는 Swift·Foundation·CryptoKit으로 저장된 `.logicx` 패키지를 분석하고 JSON·텍스트로 결과를 내보냅니다. AAF Trans는 Python·pyaaf2 CLI로 타임라인 길이·타임코드·트랙명·PCM 메타데이터를 검사·정규화합니다.
+[공개 소개](https://p1zza.kr/portfolio/drum-editor)
 
-**구현의 출발점:** MixManifest의 read-only parser는 [logicxkit](https://github.com/phierceweb/logicxkit/tree/75b58fbf597a2ea1296b68323c09c7e3bed84ff6)의 binary field knowledge와 일부 parsing logic을 참고·이식한 Swift adaptation입니다. 원저작자 Mike Farr의 Apache-2.0 작업과, native Swift의 범위 검사·진단·manifest 내보내기·macOS UI를 구분합니다. 독자적으로 전체 포맷을 규명했다고 주장하지 않습니다.
+멀티마이크 드럼 녹음은 같은 타격을 여러 마이크가 함께 담습니다. 트랙마다 따로 편집하면 마이크 사이의 시간 관계도 달라질 수 있어, Drum Editor에서는 기준 타격에 대한 공통 편집을 여러 트랙에 적용합니다.
 
-**확인 방식:** 입력과 출력의 구조·길이·메타데이터를 비교합니다. 파일 파싱 성공과 실제 DAW에서의 재열기는 별도로 확인해야 합니다.
+C++·JUCE로 편집·렌더링을 구현하고 CMake로 build를 구성했습니다. 원본을 보존하면서 편집 결과를 WAV/BWF로 내보내는 흐름을 다룹니다. 파일 처리 테스트와 native 실행, DAW에서의 재열기·청취는 각각 살펴야 합니다. 모든 DAW의 호환성이나 음질 개선 수치를 제시하는 사례는 아닙니다.
 
-**경계:** Logic Pro의 전체 내부 포맷이나 모든 AAF 구현의 호환성을 주장하지 않습니다. 외부 parser·라이브러리와 참고 구현의 저작권·attribution을 존중합니다.
+## 함께 만든 도구
 
-## 4. Drum Editor·오디오 플러그인: 공통 편집과 처리 경계
+### AAF Trans
 
-[Drum Editor](https://p1zza.kr/portfolio/drum-editor) · [Realtime Restore](https://p1zza.kr/portfolio/realtime-restore) · [YAMMY](https://p1zza.kr/portfolio/yammy)
+[AAF Trans](https://p1zza.kr/portfolio/aaf-trans)는 Python·pyaaf2 기반 CLI입니다. AAF 타임라인 길이·타임코드·트랙명·내장 PCM 메타데이터를 검사하고 정규화합니다. 변환은 복제본에 적용하며 구조와 오디오 지문을 비교합니다. 파일 검사 통과와 실제 DAW에서의 재열기는 별도 확인 항목입니다.
 
-**문제:** 멀티마이크 드럼은 트랙마다 임의로 편집하면 마이크 간 시간 관계가 달라질 수 있습니다. 실시간 이펙트는 편집 UI와 신호 처리, 상태 저장을 함께 다뤄야 합니다.
+### 콘텐츠와 게시 작업 관리
 
-**설계 선택:** Drum Editor는 기준 타격의 공통 편집을 여러 마이크에 적용하고 원본을 보존합니다. 플러그인은 DSP·parameter·상태 저장·UI를 구분해 구성합니다.
+[갈릭톤 스튜디오](https://p1zza.kr/portfolio/garlicton)에서는 Next.js·Payload CMS·SQLite로 음반·서비스·공간 콘텐츠와 한국어·영어 화면을 연결했습니다. [WP Manager](https://p1zza.kr/portfolio/wp-manager)에서는 FastAPI·SQLAlchemy로 API·데이터 계층을, Celery·Redis·PostgreSQL로 비동기 게시 작업 구성을 다룹니다. 예약을 만든 뒤 실제 작업이 실행됐는지, 문의가 접수된 뒤 메일이 도착했는지까지 따로 확인해야 합니다.
 
-**구현 범위:** C++·JUCE·CMake 기반의 편집·렌더링, WAV/BWF 파일, pitch shifting과 오디오 복원 처리, AU·VST3·standalone target을 확인했습니다.
+### 실시간 오디오 플러그인
 
-**확인 방식:** DSP·파일 테스트, native build, standalone 실행, DAW host 검증과 청취를 별도 단계로 봅니다.
-
-**경계:** 일부 플러그인은 개발 단계입니다. build target이나 처리 코드가 존재한다고 상용 제품의 성숙도·무결점 음질·모든 host 지원이 검증된 것은 아닙니다.
-
-## 5. CMS·비동기 작업: 사용자 화면 밖의 관리 기능
-
-[갈릭톤 스튜디오](https://p1zza.kr/portfolio/garlicton) · [WP Manager](https://p1zza.kr/portfolio/wp-manager)
-
-**문제:** 공개 화면만으로는 콘텐츠의 수정·게시·예약·실패 처리를 관리하기 어렵습니다.
-
-**설계 선택:** 공개 조회와 관리자 변경의 권한을 나누고, 콘텐츠 모델과 미디어·문의 연동을 관리 화면에 연결합니다. 오래 걸리는 게시 작업은 API와 작업자로 나눕니다.
-
-**구현 범위:** Next.js·Payload CMS·SQLite를 통한 콘텐츠 관리, FastAPI·SQLAlchemy·Celery·Redis·PostgreSQL을 통한 작업 관리 구성을 확인했습니다.
-
-**확인 방식:** 화면 동작, 저장 결과, 작업 실행, 외부 서비스의 접수와 최종 결과를 구분해 기록합니다.
-
-**경계:** 메일 API 접수가 수신함 도착을 의미하지 않고, 예약 생성이 실제 실행을 뜻하지 않습니다. 모든 외부 게시·복구 경로를 이번 문서 작업에서 재실행하지 않았습니다.
+[Realtime Restore](https://p1zza.kr/portfolio/realtime-restore)와 [YAMMY](https://p1zza.kr/portfolio/yammy)에서는 JUCE 기반 신호 처리와 parameter·상태 저장·UI를 다룹니다. AU·VST3·standalone target이 있으며, 개발 단계인 플러그인의 host 지원과 청취 결과는 개별 검증이 필요합니다.
