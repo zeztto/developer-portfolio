@@ -4,11 +4,22 @@
 
 대표 작업에서 맡은 구현을 중심으로 설명합니다. 공개 목록에 기재된 모든 기술과 사용 프로젝트는 [기술별 프로젝트](technology-index.md)에서 볼 수 있습니다.
 
-## 웹 서비스와 데이터
+## 웹 프로젝트별 기술 스택
 
-[LMML](https://p1zza.kr/portfolio/lmml)에서는 TypeScript·React·Next.js로 공개·관리자 화면과 API를 만듭니다. Drizzle ORM·SQLite로 공연 정보를 저장하고, next-intl로 한국어·영어 콘텐츠를 연결합니다. 포스터 저장에는 Cloudflare R2를 사용합니다. 화면에서 수정한 정보가 저장과 조회를 거쳐 다시 표시되는 흐름을 함께 다룹니다.
+백엔드는 Vultr의 서버에서 Docker와 Docker Compose로 운영합니다. 리버스 프록시가 필요한 구성에는 Caddy를 사용합니다. 아래 표의 데이터베이스와 API는 프로젝트 원본을 기준으로 적었습니다.
 
-[갈릭톤 스튜디오](https://p1zza.kr/portfolio/garlicton)는 콘텐츠 수정이 중심인 웹사이트입니다. Next.js에 Payload CMS·Lexical·SQLite를 연결해 음반·서비스·공간 소개를 관리하고, Sass로 화면을 구성했습니다.
+| 프로젝트 | 프론트엔드 | API·데이터·연동 | 배포 구성 |
+| --- | --- | --- | --- |
+| [LMML](https://p1zza.kr/portfolio/lmml) | Next.js App Router, React, TypeScript, Tailwind CSS, next-intl | Next.js Route Handlers, Drizzle ORM, SQLite·libSQL 클라이언트, Cloudflare R2, DeepSeek API | Docker |
+| [p1zza.kr](https://p1zza.kr/) | React, TypeScript, Vite, React Router | Express, Drizzle ORM, PostgreSQL | Vultr, Docker Compose, Caddy |
+| [갈릭톤 스튜디오](https://p1zza.kr/portfolio/garlicton) | Next.js, React, TypeScript, Sass, next-intl | Payload CMS, Lexical, SQLite | Vultr, Docker Compose |
+| [OFIS](https://p1zza.kr/portfolio/ofis) | Next.js, React, TypeScript, Tailwind CSS | Next.js Route Handlers, PostgreSQL, Google OAuth, Gemini API | Docker, Vultr 배포 구성 |
+| [1wik 인테리어](https://p1zza.kr/portfolio/1wik) | Next.js, React, TypeScript | Fastify, Drizzle ORM, PostgreSQL, Zod | Docker Compose |
+| [ONKURA](https://p1zza.kr/portfolio/onkura) | Next.js, React, TypeScript, Tailwind CSS, Framer Motion | Prisma, PostgreSQL, Zod | Docker 빌드 구성 |
+| [2fit 인재 협업](https://p1zza.kr/portfolio/2fit-talent) | Next.js, React, TypeScript, CSS Modules | 이전 배포는 별도 Node.js·TypeScript API와 메모리·파일 기반 상태 사용 | 이전 배포 Docker Compose·Caddy, 공개 검토본 Vercel 정적 호스팅 |
+| [로워커 · 구버전 ROW](https://p1zza.kr/portfolio/row-worker) | Next.js, React, TypeScript | Fastify, Prisma, PostgreSQL | Vultr, Docker Compose, Caddy |
+
+Vercel 공개 검토본은 포트폴리오에서 화면을 확인하는 데 사용합니다. 2fit 검토본은 원본 프론트엔드에서 골라 정적으로 배포했으며 운영 데이터베이스와 분리되어 있습니다.
 
 [WP Manager](https://p1zza.kr/portfolio/wp-manager)는 여러 블로그의 게시 작업을 다룹니다. FastAPI·SQLAlchemy로 API와 데이터 계층을 구성하고, 오래 걸리는 작업은 Celery·Redis 작업자로 나눕니다. React 화면과 PostgreSQL 저장소를 연결합니다.
 
