@@ -22,6 +22,13 @@ Next.js와 Payload CMS로 음반·서비스·공간 정보를 관리하고, 한�
 
 Next.js·React·TypeScript로 디지털 자산 가치 평가 서비스 소개와 매물 탐색 화면을 구성한 웹사이트입니다. [사이트 열기](https://ofis.kr/) · [구현 사례](https://p1zza.kr/portfolio/ofis)
 
+## 이전 웹 프로젝트
+
+- **1wik 인테리어** · 공간 조건, 공사 범위와 예산을 정리하고 견적 비교 절차를 살펴보는 화면입니다. [포트폴리오용 공개 화면](https://1wik.vercel.app/) · [구현 사례](https://p1zza.kr/portfolio/1wik)
+- **ONKURA 쇼핑몰** · 도쿄 스트릿 패션 브랜드와 상품을 살펴보고 주문 요청으로 이어지는 쇼핑몰입니다. [포트폴리오용 공개 화면](https://portfolio-onkura-com.vercel.app/) · [구현 사례](https://p1zza.kr/portfolio/onkura)
+- **2fit 인재 협업** · 기업 간 단기 프로젝트를 위한 익명 인재 탐색, 참여자 동의와 협업 조건 합의 흐름을 설계한 프로젝트입니다. [구현 사례](https://p1zza.kr/portfolio/2fit-talent)
+- **로워커 · 구버전 ROW** · 현장 관리, 출퇴근 기록, 인건비 정산 화면을 연결한 현장 인력 관리 서비스입니다. [공개 검토본](https://portfolio-row-kr.vercel.app/portfolio) · [구현 사례](https://p1zza.kr/portfolio/row-worker)
+
 ## Codex 활용과 검증
 
 Codex에 구현할 기능과 수정 범위, 화면에서 확인할 동작을 먼저 전달합니다. 변경된 코드를 직접 읽고 테스트한 뒤, PC와 모바일에서 실제 사용 흐름을 확인합니다. LMML에서는 라인업을 편집하고 다시 열었을 때의 값을 공개 화면과 비교했습니다. p1zza.kr에서는 프로젝트 목록에서 상세 화면을 거쳐 실제 서비스가 열리는지 확인했습니다. [개발·검증 방식](docs/engineering.md)
@@ -34,4 +41,4 @@ Codex에 구현할 기능과 수정 범위, 화면에서 확인할 동작을 먼
 
 기자·콘텐츠 제작·마케팅을 거쳐 웹 서비스를 개발하고 있습니다. [프로필](https://p1zza.kr/profile) · [문의](https://p1zza.kr/inquiry)
 
-2026-11-16 · 문서 버전 **1.1.2**
+2026-11-16 · 문서 버전 **1.1.3**
